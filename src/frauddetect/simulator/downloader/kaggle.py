@@ -1,4 +1,4 @@
-from kagglehub import dataset_download
+import kagglehub
 from .base import Downloader
 import os
 from typing import List
@@ -9,12 +9,15 @@ class KaggleDownloader(Downloader):
         super().__init__()
         self.dataset = dataset
         self.handler = KaggleFileHandler()
+        self.downloaded = None
     
-    def download_dataset(self):
-        return dataset_download(self.dataset)
+    def _download_dataset(self):
+        self.downloaded = kagglehub.dataset_download(self.dataset)
     
     def get_avaiable_datasets(self) -> List:
-        return self.handler.list_paths(self.download_dataset())
+        if not self.downloaded:
+            self._download_dataset()
+        return self.handler.list_paths(self.downloaded)
     
 class KaggleFileHandler():
     @staticmethod

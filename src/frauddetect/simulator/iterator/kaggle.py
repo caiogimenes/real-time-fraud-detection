@@ -4,13 +4,10 @@ from river.stream import iter_csv
 
 
 class KaggleIterator(Iterator):
-    def __init__(self):
+    def __init__(self, path):
         super().__init__()
-
-    def read_dataset(self, path: str, filename: str):
-        self.stream = iter_csv(os.path.join(path, filename))
-        return iter_csv(os.path.join(path, filename))
-
-    def get_new_instance(self):
-        for instance in self.read_dataset(self.stream):
-            yield instance
+        self.path = path
+        self.stream = self._set_stream()
+        
+    def _set_stream(self):
+        return iter_csv(os.path.join(self.path))
