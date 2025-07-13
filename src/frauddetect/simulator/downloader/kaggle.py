@@ -13,6 +13,7 @@ class KaggleDownloader(Downloader):
     
     def _download_dataset(self):
         self.downloaded = kagglehub.dataset_download(self.dataset)
+        return self.downloaded
     
     def get_avaiable_datasets(self) -> List:
         if not self.downloaded:

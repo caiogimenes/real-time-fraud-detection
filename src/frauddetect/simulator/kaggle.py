@@ -16,11 +16,11 @@ class KaggleSimulator(Simulator):
 
     def show_avaiable_data(self):
         self.avaiable_data = self.downloader.get_avaiable_datasets()
-        for file in self.avaiable_data:
-            print(file)
+        for i, file in enumerate(self.avaiable_data):
+            print(i,'--->\t', file)
 
-    def select_data(self, i):
-        path = self.avaiable_data[i]
+    def select_data(self, index: int):
+        path = self.avaiable_data[index]
         self.selected_data = path
         self.iterator = KaggleIterator(path)
     
